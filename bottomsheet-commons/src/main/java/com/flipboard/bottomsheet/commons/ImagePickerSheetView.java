@@ -10,16 +10,17 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
-import android.support.annotation.CheckResult;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.IntDef;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v4.view.ViewCompat;
+
+import androidx.annotation.CheckResult;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.IntDef;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.core.view.ViewCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -181,7 +182,8 @@ public class ImagePickerSheetView extends FrameLayout {
     protected boolean showPickerOption = true;
     protected Drawable cameraDrawable = null;
     protected Drawable pickerDrawable = null;
-    protected @LayoutRes int tileLayout = R.layout.sheet_image_grid_item;
+    protected @LayoutRes
+    int tileLayout = R.layout.sheet_image_grid_item;
     protected String title;
     private int columnWidthDp = 100;
 

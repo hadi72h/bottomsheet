@@ -1,12 +1,13 @@
 package com.flipboard.bottomsheet.sample;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.flipboard.bottomsheet.BottomSheetLayout;
 import com.flipboard.bottomsheet.R;
 import com.flipboard.bottomsheet.commons.ImagePickerSheetView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Activity demonstrating the use of {@link ImagePickerSheetView}

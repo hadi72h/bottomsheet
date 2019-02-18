@@ -3,13 +3,14 @@ package com.flipboard.bottomsheet.commons;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.MenuRes;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.view.SupportMenuInflater;
-import android.support.v7.view.menu.MenuBuilder;
+
+import androidx.annotation.LayoutRes;
+import androidx.annotation.MenuRes;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.appcompat.view.SupportMenuInflater;
+import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.core.view.ViewCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -84,6 +85,7 @@ public class MenuSheetView extends FrameLayout {
      * @param title Title for the sheet. Can be null
      * @param listener Listener for menu item clicks in the sheet
      */
+    @SuppressLint("RestrictedApi")
     public MenuSheetView(final Context context, final MenuType menuType, @Nullable final CharSequence title, final OnMenuItemClickListener listener) {
         super(context);
 
@@ -116,6 +118,7 @@ public class MenuSheetView extends FrameLayout {
      *
      * @param menuRes Menu resource ID
      */
+    @SuppressLint("RestrictedApi")
     public void inflateMenu(@MenuRes int menuRes) {
         if (menuRes != -1) {
             SupportMenuInflater inflater = new SupportMenuInflater(getContext());

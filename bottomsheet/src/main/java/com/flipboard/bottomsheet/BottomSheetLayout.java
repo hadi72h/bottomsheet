@@ -10,7 +10,6 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.Property;
 import android.view.Gravity;
@@ -27,6 +26,7 @@ import android.widget.FrameLayout;
 
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import androidx.annotation.NonNull;
 import flipboard.bottomsheet.R;
 
 public class BottomSheetLayout extends FrameLayout {

@@ -1,7 +1,6 @@
 package com.flipboard.bottomsheet.sample;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -9,6 +8,8 @@ import android.widget.Toast;
 import com.flipboard.bottomsheet.BottomSheetLayout;
 import com.flipboard.bottomsheet.R;
 import com.flipboard.bottomsheet.commons.MenuSheetView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Activity demonstrating the use of {@link MenuSheetView}
