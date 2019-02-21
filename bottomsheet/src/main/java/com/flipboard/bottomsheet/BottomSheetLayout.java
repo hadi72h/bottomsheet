@@ -11,7 +11,6 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.Property;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -246,8 +245,8 @@ public class BottomSheetLayout extends FrameLayout {
     }
 
     @Override
-    public boolean onKeyPreIme(int keyCode, @NonNull KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && isSheetShowing()) {
+    public boolean dispatchKeyEventPreIme(KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && isSheetShowing()) {
             if (event.getAction() == KeyEvent.ACTION_DOWN && event.getRepeatCount() == 0) {
                 KeyEvent.DispatcherState state = getKeyDispatcherState();
                 if (state != null) {
@@ -269,7 +268,7 @@ public class BottomSheetLayout extends FrameLayout {
                 }
             }
         }
-        return super.onKeyPreIme(keyCode, event);
+        return super.dispatchKeyEventPreIme(event);
     }
 
     private void setSheetTranslation(float newTranslation) {
@@ -503,8 +502,6 @@ public class BottomSheetLayout extends FrameLayout {
     }
 
     private void setState(State state) {
-        Log.w("MyFragment", "" + state);
-
         if (state != this.state) {
             this.state = state;
             for (OnSheetStateChangeListener onSheetStateChangeListener : onSheetStateChangeListeners) {
