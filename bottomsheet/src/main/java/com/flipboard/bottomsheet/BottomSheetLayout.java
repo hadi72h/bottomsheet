@@ -100,26 +100,39 @@ public class BottomSheetLayout extends FrameLayout {
     private boolean interceptContentTouch = true;
     private int currentSheetViewHeight;
     private boolean hasIntercepted;
+
+    private float aspectRatio = 16.0f / 9.0f;
     private float peekKeyline;
     private float peek;
 
-    /** Some values we need to manage width on tablets */
+    /**
+     * Some values we need to manage width on tablets
+     */
     private int screenWidth = 0;
+    private int screenHeight = 0;
     private final boolean isTablet = getResources().getBoolean(R.bool.bottomsheet_is_tablet);
     private final int defaultSheetWidth = getResources().getDimensionPixelSize(R.dimen.bottomsheet_default_sheet_width);
     private int sheetStartX = 0;
     private int sheetEndX = 0;
 
-    /** Snapshot of the touch's y position on a down event */
+    /**
+     * Snapshot of the touch's y position on a down event
+     */
     private float downY;
 
-    /** Snapshot of the touch's x position on a down event */
+    /**
+     * Snapshot of the touch's x position on a down event
+     */
     private float downX;
 
-    /** Snapshot of the sheet's translation at the time of the last down event */
+    /**
+     * Snapshot of the sheet's translation at the time of the last down event
+     */
     private float downSheetTranslation;
 
-    /** Snapshot of the sheet's state at the time of the last down event */
+    /**
+     * Snapshot of the sheet's state at the time of the last down event
+     */
     private State downState;
 
     public BottomSheetLayout(Context context) {
@@ -157,10 +170,21 @@ public class BottomSheetLayout extends FrameLayout {
         Point point = new Point();
         ((WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getSize(point);
         screenWidth = point.x;
+        screenHeight = point.y;
         sheetEndX = screenWidth;
 
         peek = 0; //getHeight() return 0 at start!
-        peekKeyline = point.y - (screenWidth / (16.0f / 9.0f));
+
+        initPeekKeyLine();
+    }
+
+    private void initPeekKeyLine() {
+        peekKeyline = screenHeight - (screenWidth / aspectRatio);
+    }
+
+    public void setAspectRatio(float aspectRatio) {
+        this.aspectRatio = aspectRatio;
+        initPeekKeyLine();
     }
 
     /**
@@ -490,7 +514,7 @@ public class BottomSheetLayout extends FrameLayout {
 
     /**
      * Set dim and translation to the initial state
-     * */
+     */
     private void initializeSheetValues() {
         this.sheetTranslation = 0;
         this.contentClipRect.set(0, 0, getWidth(), getHeight());
@@ -608,7 +632,7 @@ public class BottomSheetLayout extends FrameLayout {
      * Present a sheet view to the user.
      * If another sheet is currently presented, it will be dismissed, and the new sheet will be shown after that
      *
-     * @param sheetView The sheet to be presented.
+     * @param sheetView       The sheet to be presented.
      * @param viewTransformer The view transformer to use when presenting the sheet.
      */
     public void showWithSheetView(final View sheetView, final ViewTransformer viewTransformer) {
