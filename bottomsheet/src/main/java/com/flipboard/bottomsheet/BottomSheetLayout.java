@@ -11,6 +11,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.Property;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -105,6 +106,8 @@ public class BottomSheetLayout extends FrameLayout {
     private float peekKeyline;
     private float peek;
 
+    private boolean enableExpandOnLayoutChange = true;
+
     /**
      * Some values we need to manage width on tablets
      */
@@ -185,6 +188,10 @@ public class BottomSheetLayout extends FrameLayout {
     public void setAspectRatio(float aspectRatio) {
         this.aspectRatio = aspectRatio;
         initPeekKeyLine();
+    }
+
+    public void setEnableExpandOnLayoutChange(boolean enableExpandOnLayoutChange) {
+        this.enableExpandOnLayoutChange = enableExpandOnLayoutChange;
     }
 
     /**
@@ -496,6 +503,8 @@ public class BottomSheetLayout extends FrameLayout {
     }
 
     private void setState(State state) {
+        Log.w("MyFragment", "" + state);
+
         if (state != this.state) {
             this.state = state;
             for (OnSheetStateChangeListener onSheetStateChangeListener : onSheetStateChangeListeners) {
@@ -706,12 +715,19 @@ public class BottomSheetLayout extends FrameLayout {
                         }
                         setSheetTranslation(newSheetViewHeight);
                     } else if (currentSheetViewHeight > 0 && newSheetViewHeight > currentSheetViewHeight && state == State.PEEKED) {
-                        if (newSheetViewHeight == getMaxSheetTranslation()) {
-                            setState(State.EXPANDED);
+                        if (enableExpandOnLayoutChange) {
+                            if (newSheetViewHeight == getMaxSheetTranslation()) {
+                                setState(State.EXPANDED);
+                            }
+
+                        } else {
+                            newSheetViewHeight = (int) getPeekSheetTranslation();
                         }
+
                         setSheetTranslation(newSheetViewHeight);
                     }
                 }
+
                 currentSheetViewHeight = newSheetViewHeight;
             }
         };

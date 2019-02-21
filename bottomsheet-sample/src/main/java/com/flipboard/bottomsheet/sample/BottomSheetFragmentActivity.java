@@ -1,7 +1,9 @@
 package com.flipboard.bottomsheet.sample;
 
 import android.os.Bundle;
-import android.view.View;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
 
 import com.flipboard.bottomsheet.BottomSheetLayout;
 import com.flipboard.bottomsheet.R;
@@ -22,9 +24,24 @@ public final class BottomSheetFragmentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bottom_sheet_fragment);
         bottomSheetLayout = (BottomSheetLayout) findViewById(R.id.bottomsheet);
         bottomSheetLayout.setAspectRatio(0.75f);
-        findViewById(R.id.bottomsheet_fragment_button).setOnClickListener(new View.OnClickListener() {
+        bottomSheetLayout.setEnableExpandOnLayoutChange(false);
+        bottomSheetLayout.setInterceptContentTouch(false);
+
+        EditText editText = findViewById(R.id.bottomsheet_fragment_edt);
+
+        editText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
                 new MyFragment().show(getSupportFragmentManager(), R.id.bottomsheet);
             }
         });

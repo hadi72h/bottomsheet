@@ -11,13 +11,13 @@
         android:padding="16dp"
         >
 
-        <Button
-            android:id="@+id/bottomsheet_fragment_button"
+        <EditText
+            android:id="@+id/bottomsheet_fragment_edt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|top"
             android:layout_marginBottom="16dp"
-            android:text="@string/show" 
-            />
+            android:text="@string/show" />
+
     </RelativeLayout>
 </com.flipboard.bottomsheet.BottomSheetLayout>
