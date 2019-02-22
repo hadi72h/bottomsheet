@@ -1,6 +1,7 @@
 package com.flipboard.bottomsheet.sample;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
@@ -17,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 public final class BottomSheetFragmentActivity extends AppCompatActivity {
 
     protected BottomSheetLayout bottomSheetLayout;
+    protected MyFragment myFragment;
+    private Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,14 @@ public final class BottomSheetFragmentActivity extends AppCompatActivity {
         bottomSheetLayout.setInterceptContentTouch(false);
 
         EditText editText = findViewById(R.id.bottomsheet_fragment_edt);
+
+        final Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                myFragment = new MyFragment();
+                myFragment.show(getSupportFragmentManager(), R.id.bottomsheet);
+            }
+        };
 
         editText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -42,7 +53,14 @@ public final class BottomSheetFragmentActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                new MyFragment().show(getSupportFragmentManager(), R.id.bottomsheet);
+                handler.removeCallbacks(runnable);
+
+                if (myFragment != null) {
+                    myFragment.dismiss();
+                    myFragment = null;
+                }
+
+                handler.postDelayed(runnable, 500);
             }
         });
     }

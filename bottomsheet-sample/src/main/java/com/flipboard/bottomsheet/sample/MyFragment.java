@@ -86,7 +86,7 @@ public class MyFragment extends BottomSheetFragment {
                         "Test"
                 });
             }
-        }, 1000);
+        }, 100);
     }
 
     @Override

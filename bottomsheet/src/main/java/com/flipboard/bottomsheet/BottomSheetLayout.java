@@ -68,6 +68,7 @@ public class BottomSheetLayout extends FrameLayout {
     public enum State {
         HIDDEN,
         PREPARING,
+        DISMISSING,
         PEEKED,
         EXPANDED
     }
@@ -474,6 +475,7 @@ public class BottomSheetLayout extends FrameLayout {
     private void cancelCurrentAnimation() {
         if (currentAnimator != null) {
             currentAnimator.cancel();
+            currentAnimator = null;
         }
     }
 
@@ -649,7 +651,11 @@ public class BottomSheetLayout extends FrameLayout {
                     showWithSheetView(sheetView, viewTransformer);
                 }
             };
-            dismissSheet(runAfterDismissThis);
+
+            if (state != State.DISMISSING) {
+                dismissSheet(runAfterDismissThis);
+            }
+
             return;
         }
         setState(State.PREPARING);
@@ -703,6 +709,8 @@ public class BottomSheetLayout extends FrameLayout {
         sheetViewOnLayoutChangeListener = new OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View sheetView, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                cancelCurrentAnimation();
+
                 int newSheetViewHeight = sheetView.getMeasuredHeight();
                 if (state != State.HIDDEN) {
                     // The sheet can no longer be in the expanded state if it has shrunk
@@ -743,6 +751,9 @@ public class BottomSheetLayout extends FrameLayout {
             runAfterDismiss = null;
             return;
         }
+
+        setState(State.DISMISSING);
+
         // This must be set every time, including if the parameter is null
         // Otherwise a new sheet might be shown when the caller called dismiss after a showWithSheet call, which would be 
         runAfterDismiss = runAfterDismissThis;
